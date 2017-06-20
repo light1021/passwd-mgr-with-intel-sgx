@@ -1,0 +1,19 @@
+enclave {
+    include "sgx_tseal.h"
+
+    trusted {
+        /* define ECALLs here. */
+        public void encrypt_data([in,out,count=len]uint8_t* data, size_t len);
+
+        public int verify_pwd([in,count=len]uint8_t* master, [in,count=16]uint8_t* master_pas, size_t len);
+
+        public void encrypt_masterpwd([in,out,count=len]uint8_t* master, int len);
+
+    };
+
+    untrusted {
+		void read_rand([in]uint32_t * seed, [out]uint32_t * rand_val);
+		void printdata([in]uint8_t *data);
+    };
+    
+};
